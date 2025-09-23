@@ -92,4 +92,67 @@ devices:
 golden_configs:
   - "!create_or_update:device__name": "r1"
     intended_config: |-
+      ! Command: show running-config
+      ! device: waw-rtr-01 (cEOSLab, EOS-4.34.2F-43232954.4342F (engineering build))
+      !
+      no aaa root
+      !
+      username admin privilege 15 role network-admin secret sha512 $6$rR3VLY9riOxBJaFv$yzv8uVfo9CrMiNA3743YCpBcqwi17id0zp.kL3lhUPSeRMF/teyUoWIpOeHMVKu/2arj45fqB7B.zKhT6nKh0/
+      !
+      management api http-commands
+         no shutdown
+      !
+      no service interface inactive port-id allocation disabled
+      !
+      transceiver qsfp default-mode 4x10G
+      !
+      service routing protocols model multi-agent
+      !
+      hostname waw-rtr-01
+      !
+      spanning-tree mode mstp
+      !
+      system l1
+         unsupported speed action error
+         unsupported error-correction action error
+      !
+      management api gnmi
+         transport grpc default
+      !
+      management api netconf
+         transport ssh default
+      !
       interface Ethernet1
+         description test opisu
+      !
+      interface Ethernet2
+      !
+      interface Ethernet3
+      !
+      interface Ethernet4
+      !
+      interface Ethernet5
+      !
+      interface Ethernet6
+      !
+      interface Ethernet7
+      !
+      interface Ethernet8
+      !
+      interface Ethernet9
+      !
+      interface Management0
+         ip address 172.100.100.11/24
+      !
+      no ip routing
+      !
+      ip route 0.0.0.0/0 172.100.100.1
+      !
+      router multicast
+         ipv4
+            software-forwarding kernel
+         !
+         ipv6
+            software-forwarding kernel
+      !
+      end
