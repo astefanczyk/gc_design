@@ -19,7 +19,7 @@ class GoldenConfigDesign(DesignJob):
 
         name = "Golden Config Creation"
         commit_default = False
-        design_file = "designs/0001_design.yaml.j2"
+        design_file = "designs/0001.yaml.j2"
         context_class = GoldenConfigDesignContext
         version = "1.0.0"
 
