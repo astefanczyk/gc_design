@@ -4,7 +4,7 @@ from nautobot.apps.jobs import register_jobs, IntegerVar
 
 from nautobot_design_builder.design_job import DesignJob
 
-from .context import InitialDesignContext
+from .context import GoldenConfigDesignContext
 
 
 class GoldenConfigDesign(DesignJob):
@@ -17,10 +17,10 @@ class GoldenConfigDesign(DesignJob):
     class Meta:
         """Metadata needed to implement the backbone site design."""
 
-        name = "Initial Data"
+        name = "Golden Config Creation"
         commit_default = False
         design_file = "designs/0001_design.yaml.j2"
-        context_class = InitialDesignContext
+        context_class = GoldenConfigDesignContext
         version = "1.0.0"
 
     def post_implementation(self, context, environment):
@@ -28,17 +28,6 @@ class GoldenConfigDesign(DesignJob):
         self.logger.info(f'{debug_tag} POST IMPLEMENTATION')
         self.logger.info(f'{debug_tag} JOURNAL: {environment.journal.__dict__}')
         self.logger.info(f'{debug_tag} CONTEXT: {context.__dict__}')
-        '''
-        self.logger.info(f'{debug_tag} DESIGN KEYS: {self.designs.keys()}')
-        self.logger.info(
-            f"{debug_tag} DESIGN: {self.designs['designs/0001_design.yaml.j2']}"
-        )
-        if hasattr(self, 'rendered_design') and geattr(self, 'rendered_design'):
-            self.logger.info(f'{debug_tag} RENDERED DESIGN: {self.rendered_design.__dict__}')
-        if hasattr(self, 'rendered') and getattr(self, 'rendered'):
-            self.logger.info(f'{debug_tag} RENDERED: {self.rendered.__dict__}')
-        self.logger.info(f'{debug_tag} ENVIRONMENT: {environment.__dict__}')
-        '''
 
 name = "Golden Config Designs"
 register_jobs(GoldenConfigDesign)
