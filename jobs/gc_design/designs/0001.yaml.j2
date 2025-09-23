@@ -2,23 +2,91 @@
 manufacturers:
   - "!create_or_update:name": "Arista"
 
-device_roles:
-  - "!create_or_update:name": "Router"
-    color: "39f6f5"
-
-sites:
-  - "!create_or_update:name": "LAB"
+platforms:
+  - "!create_or_update:name": "Arista EOS"
+    "manufacturer__name": "Arista"
+    "!ref": "eos"
 
 device_types:
   - "!create_or_update:model": "model-example"
+    part_number: "example"
     manufacturer__name: "Arista"
     u_height: 1
 
+roles:
+  - "!create_or_update:name": "Core Router"
+    color: "3f51b5"
+    content_types:
+      - "!get:app_label": "dcim"
+        "!get:model": "device"
+
+location_types:
+  - "!create_or_update:name": "Region"
+    nestable: true
+    children:
+      - "!create_or_update:name": "Site"
+        content_types:
+          - "!get:app_label": "circuits"
+            "!get:model": "circuittermination"
+          - "!get:app_label": "dcim"
+            "!get:model": "device"
+          - "!get:app_label": "dcim"
+            "!get:model": "powerpanel"
+          - "!get:app_label": "dcim"
+            "!get:model": "rack"
+          - "!get:app_label": "dcim"
+            "!get:model": "rackgroup"
+          - "!get:app_label": "ipam"
+            "!get:model": "prefix"
+          - "!get:app_label": "ipam"
+            "!get:model": "vlan"
+          - "!get:app_label": "ipam"
+            "!get:model": "vlangroup"
+          - "!get:app_label": "virtualization"
+            "!get:model": "cluster"
+    locations:
+      - "!create_or_update:name": "Americas"
+        status__name: "Active"
+        children:
+        - "!create_or_update:name": "United States"
+          location_type__name: "Region"
+          status__name: "Active"
+          children:
+          - "!create_or_update:name": "US-East-1"
+            location_type__name: "Region"
+            status__name: "Active"
+            children:
+            - "!create_or_update:name": "IAD5"
+              location_type__name: "Site"
+              status__name: "Active"
+              "!ref": "iad5"
+            - "!create_or_update:name": "LGA1"
+              location_type__name: "Site"
+              status__name: "Active"
+              "!ref": "lga1"
+          - "!create_or_update:name": "US-West-1"
+            location_type__name: "Region"
+            status__name: "Active"
+            children:
+            - "!create_or_update:name": "LAX11"
+              location_type__name: "Site"
+              status__name: "Active"
+              "!ref": "lax11"
+            - "!create_or_update:name": "SEA1"
+              location_type__name: "Site"
+              status__name: "Active"
+              "!ref": "sea1"
+
+circuit_types:
+  - "!create_or_update:name": "Ethernet"
+
 devices:
   - "!create_or_update:name": "r1"
+    location: "!ref:iad5"
     device_type__model: "model-example"
-    device_role__name: "Router"
-    site__name: "LAB"
+    role__name: "Core Router"
+    status__name: "Active"
+    platform: "!ref:eos"
 
 golden_configs:
   - "!create_or_update:device__name": "r1"
